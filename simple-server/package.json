@@ -1,0 +1,22 @@
+{
+  "name": "simple-server",
+  "version": "1.0.0",
+  "description": "A extremely simple server",
+  "main": "server.js",
+  "scripts": {
+    "dev": "sudo nodemon --exec babel-node server.js",
+    "build": "babel server.js -d build",
+    "prod": "npm run build && node build/server.js"
+  },
+  "keywords": [
+    "simple",
+    "server"
+  ],
+  "author": "Nazmuz Shakib Pranto <npranto@gmail.com> (https://github.com/npranto)",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.4.0",
+    "nodemon": "^1.11.0"
+  }
+}
