@@ -43,6 +43,7 @@ const server = http.createServer((req, res) => {
         const mimeType = mimeTypes[path.extname(filename).split('.').reverse()[0]];
         res.writeHead(200, {'Content-type': mimeType});
 
+        // stream index.html to the client
         const fileStream = fs.createReadStream(filename);
         console.log('RESPONSE: ', res);
         fileStream.pipe(res);
