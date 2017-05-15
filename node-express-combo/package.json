@@ -1,0 +1,31 @@
+{
+  "name": "node-express-combo",
+  "version": "1.0.0",
+  "description": "Using the express.js framework with node to create a simple site with routes",
+  "main": "server.js",
+  "scripts": {
+    "dev": "sudo nodemon --exec babel-node server.js",
+    "build": "babel server.js -d build",
+    "prod": "npm run build && node build/server.js"
+  },
+  "keywords": [
+    "express",
+    "nodejs",
+    "routing",
+    "website",
+    "simple"
+  ],
+  "author": "Nazmuz Shakib Pranto <npranto@gmail.com> (https://github.com/npranto)",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.4.0",
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "jade": "^1.11.0",
+    "nodemailer": "^4.0.1"
+  }
+}
