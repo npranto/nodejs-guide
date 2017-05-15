@@ -15,21 +15,21 @@ html
                     a.navbar-brand(href='#') Project name
                 #navbar.navbar-collapse.collapse
                     ul.nav.navbar-nav
-                        each tab, i in ['Home', 'About', 'Info']
+                        each tab, i in ['Home', 'About', 'Contact']
+                            //
+                            mixin renderEachTab(tab, classActive)
+                                if tab === 'Home'
+                                    li(class="#{classActive}")
+                                        a(href='/') #{tab}
+                                else
+                                    li(class="#{classActive}")
+                                        a(href='/#{tab.toLowerCase()}') #{tab}
+                            //
                             if tab == title
-                                if tab === 'Home'
-                                    li.active
-                                        a(href='/') #{tab}
-                                else
-                                    li.active
-                                        a(href='/#{tab.toLowerCase()}') #{tab}
+                                +renderEachTab(tab, 'active')
                             else
-                                if tab === 'Home'
-                                    li
-                                        a(href='/') #{tab}
-                                else
-                                    li
-                                        a(href='/#{tab.toLowerCase()}') #{tab}
+                                +renderEachTab(tab, '')
+
                     form.navbar-form.navbar-right
                         .form-group
                             input.form-control(type='text', placeholder='Email')

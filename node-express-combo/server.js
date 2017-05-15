@@ -32,9 +32,9 @@ app.get('/about', (req, res) => {
         title: 'About'
     })
 })
-app.get('/info', (req, res) => {
-    res.render('info', {
-        title: 'Info'
+app.get('/contact', (req, res) => {
+    res.render('contact', {
+        title: 'Contact'
     })
 })
 
