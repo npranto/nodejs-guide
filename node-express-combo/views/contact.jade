@@ -9,25 +9,22 @@ block content
             p
                 a.btn.btn-primary.btn-lg(href='#', role='button') Learn more »
     .container
-        .row
-            .col-md-4
-                h2 Heading
-                p
-                    | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-                p
-                    a.btn.btn-default(href='#', role='button') View details »
-            .col-md-4
-                h2 Heading
-                p
-                    | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-                p
-                    a.btn.btn-default(href='#', role='button') View details »
-            .col-md-4
-                h2 Heading
-                p
-                    | Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-                p
-                    a.btn.btn-default(href='#', role='button') View details »
+        form.form-horizontal(method="post" action="contact/send")
+            .form-group
+                label.col-sm-2.control-label(for='inputEmail1') Name
+                .col-sm-10
+                    input#inputEmail1.form-control(type='text', name='name' placeholder='Name')
+            .form-group
+                label.col-sm-2.control-label(for='inputEmail2') Email
+                .col-sm-10
+                    input#inputEmail2.form-control(type='email', name='email' placeholder='Email')
+            .form-group
+                label.col-sm-2.control-label(for='inputEmail3') Message
+                .col-sm-10
+                    textarea#inputEmail3.form-control(type='text', rows='3', name='message' placeholder='Message')
+            .form-group
+                .col-sm-offset-2.col-sm-10
+                    button.btn.btn-success(type='submit') Send
 
 
 
