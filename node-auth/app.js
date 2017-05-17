@@ -68,11 +68,6 @@ app.use(expressValidator({
 // connect flash middleware
 app.use(flash());
 
-
-
-
-
-
 app.use('/', index);
 app.use('/users', users);
 
