@@ -7,11 +7,13 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var multer = require('multer');     // for file uploads
+var multer = require('multer');
 var flash = require('connect-flash');
 var expressValidator = require('express-validator');
 var mongodb = require('mongodb');
 var mongoose = require('mongoose');
+
+var db = mongoose.connection;
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -20,7 +22,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -29,15 +31,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// file uploads middleware
+
+// multer middleware
 var upload = multer({ dest: 'uploads/' })
-// app sessions middleware
+
+// express session middleware
 app.use(session({
-    secret: 'jsfj-c35y4uu45bc45-nb45u654c6b-hc-bg4t',
-    resave: false,
+    secret: 'dfghd34-34534v5nj53c-c545hb',
+    resave: true,
     saveUninitialized: true,
     cookie: { secure: true }
 }))
+
 // passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
@@ -59,8 +64,14 @@ app.use(expressValidator({
         };
     }
 }));
+
 // connect flash middleware
 app.use(flash());
+
+
+
+
+
 
 app.use('/', index);
 app.use('/users', users);
