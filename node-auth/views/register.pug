@@ -3,32 +3,36 @@ extends layout
 block content
     h1(class="text-center")= title
     hr
-    form.form-horizontal(method="post" action="/users/register" class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3")
+    .form-validation-errors
+    if errors
+        each error, i in errors
+            .alert.alert-danger.col-sm-12.col-md-6.col-md-offset-3.col-lg-6.col-lg-offset-3.text-center(role='alert') #{error.msg}
+    form.form-horizontal(method="post" enctype="multipart/form-data" action="/users/register" class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3")
         .form-group
             label.col-sm-2.control-label(for='inputEmail1') Name
             .col-sm-10.col-md-10.col-lg-10
-                input#inputEmail1.form-control(type='text', placeholder='Name')
+                input#inputEmail1.form-control(type='text', placeholder='Name' name="name")
         .form-group
             label.col-sm-2.control-label(for='inputEmail4') Username
             .col-sm-10.col-md-10.col-lg-10
-                input#inputEmail4.form-control(type='text', placeholder='Username')
+                input#inputEmail4.form-control(type='text', placeholder='Username' name="username")
         .form-group
             label.col-sm-2.control-label(for='inputEmail2') Email
             .col-sm-10.col-md-10.col-lg-10
-                input#inputEmail2.form-control(type='email', placeholder='Email')
+                input#inputEmail2.form-control(type='email', placeholder='Email' name="email")
         .form-group
             label.col-sm-2.control-label(for='inputPassword3') Password
             .col-sm-10.col-md-10.col-lg-10
-                input#inputPassword3.form-control(type='password', placeholder='Password')
+                input#inputPassword3.form-control(type='password', placeholder='Password' name="password")
         .form-group
             label.col-sm-2.control-label(for='inputPassword5') Confirm Password
             .col-sm-10.col-md-10.col-lg-10
-                input#inputPassword5.form-control(type='password', placeholder='Confirm Password')
+                input#inputPassword5.form-control(type='password', placeholder='Confirm Password' name="confirmPassword")
         // for picture upload
         .form-group
             label.col-sm-2.control-label(for='exampleInputFile') Photo
             .col-sm-10.col-md-10.col-lg-10
-                input#exampleInputFile.form-control(type='file' class="")
+                input#exampleInputFile.form-control(type='file' name="avatar")
                 p.help-block Upload a profile picture with .jpg, .jpeg, or .png extensions only
         // save
         .form-group
