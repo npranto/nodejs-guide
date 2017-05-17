@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    meta(name="viewport" content="width=device-width, intial-scale=1")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
     title= title
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
     link(rel='stylesheet', href='/stylesheets/style.css')
@@ -20,10 +20,10 @@ html
         // Collect the nav links, forms, and other content for toggling
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav.navbar-right
-            li
-              a(href='/users/login')
-                button(type="button" class="btn btn-success") Login
-            li
+            // dynamically activates 'active' class for nav tabs when route changes
+            li(class=(title === 'Login' ? 'active' : ''))
+              a(href='/users/login') Login
+            li(class=(title === 'Register' ? 'active' : ''))
               a(href='/users/register') Register
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
@@ -38,7 +38,7 @@ html
                   a(href='#') Settings
                 li.divider(role='separator')
                 li
-                  a(href='/users/logout') Logout
+                  a(href='#') Logout
         // /.navbar-collapse
       // /.container-fluid
 
