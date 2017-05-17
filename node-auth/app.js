@@ -13,8 +13,6 @@ var expressValidator = require('express-validator');
 var mongodb = require('mongodb');
 var mongoose = require('mongoose');
 
-var db = mongoose.connection;
-
 var index = require('./routes/index');
 var users = require('./routes/users');
 
@@ -67,6 +65,13 @@ app.use(expressValidator({
 
 // connect flash middleware
 app.use(flash());
+
+// setting up database configuration
+var mongoUri = 'mongodb://localhost:27017/node-auth';
+mongoose.connect(mongoUri);
+mongoose.connection.once('open', function(){
+    console.log('successfully connected to mongodb');
+});
 
 app.use('/', index);
 app.use('/users', users);
