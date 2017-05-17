@@ -3,6 +3,8 @@ var router = express.Router();
 var multer = require('multer');
 var upload = multer({ dest: 'uploads/' });
 
+var User = require('./../models/User.js');
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
@@ -21,42 +23,51 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
 
     // register form validator
     console.log('VALIDATING NEW USER REGISTER FORM...');
-        // validating avatar upload
-        var getAvatarFilename = function() {
-            var avatarFilename = 'default.png';
-            if (req.file){
-                avatarFilename = req.file.filename;
+    // validating avatar upload
+    var getAvatarFilename = function() {
+        var avatarFilename = 'default.png';
+        if (req.file){
+            avatarFilename = req.file.filename;
+        }
+        return avatarFilename;
+    }
+    // validating text/password input fields
+    req.checkBody('name', 'Name field must not be empty').notEmpty();
+    req.checkBody('username', 'Username field must not be empty').notEmpty();
+    req.checkBody('email', 'Please enter a valid email').isEmail();
+    req.checkBody('password', 'Password field must not be empty').notEmpty();
+    req.checkBody('confirmPassword', 'Passwords do not match').equals(req.body.password);
+
+    // check errors after form validation
+    var errors = req.validationErrors();
+    if (errors){
+        console.log('ERROR IN NEW USER REGISTER FORM');
+        res.render('register', {
+            title: 'Register',
+            errors: errors
+        })
+    }else {
+        console.log('NO ERRORS IN NEW USER REGISTER FORM');
+        // creating new user object
+        console.log('CREATING NEW USER OBJECT...');
+        var newUser = new User({
+            name: req.body.name,
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password,
+            avatar: getAvatarFilename()
+        })
+        // save newUser to the database
+        newUser.save(function(err, userCreated){
+            if (err) {
+                console.log('ERROR IN SAVING NEW USER TO DATABASE: ', err);
+                return res.status(500).json(err);
             }
-            return avatarFilename;
-        }
-        // validating text/password input fields
-        req.checkBody('name', 'Name field must not be empty').notEmpty();
-        req.checkBody('username', 'Username field must not be empty').notEmpty();
-        req.checkBody('email', 'Please enter a valid email').isEmail();
-        req.checkBody('password', 'Password field must not be empty').notEmpty();
-        req.checkBody('confirmPassword', 'Passwords do not match').equals(req.body.password);
-
-        // check errors after form validation
-        var errors = req.validationErrors();
-        if (errors){
-            console.log('ERROR IN NEW USER REGISTER FORM');
-            res.render('register', {
-                title: 'Register',
-                errors: errors
-            })
-        }else {
-            console.log('NO ERRORS IN NEW USER REGISTER FORM');
-        }
-
-    // creating new user object
-    console.log('CREATING NEW USER OBJECT...');
-    var newUser = {
-        name: req.body.name,
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        confirmPassword: req.body.confirmPassword,
-        avatar: getAvatarFilename()
+            console.log('NEW USER SAVED TO DATABASE: ', userCreated);
+            // res.location('/');
+            res.redirect('/');
+            // return res.status(201).json(userCreated);
+        })
     }
 
     console.log('SUCCESS! NEW USER CREATED...', newUser);
