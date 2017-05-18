@@ -18,18 +18,13 @@ router.get('/login', function(req, res, next) {
 
 router.post('/login',
     passport.authenticate('local', {
-        successRedirect: '/users/:id/dashboard',
         failureRedirect: '/users/login',
-        failureFlash: true,
-        successFlash: true,
-        session: false
+        failureFlash: 'Oops! Invalid username or password',
     }), function(req, res) {
         console.log('REQ.USER: ', req.user);
-        // strategy's verify callback (to flash messages)
-        // req.flash('info', 'Flash is back!');
-        // If this function gets called, authentication was successful.
-        // `req.user` contains the authenticated user.
-        // res.redirect('/users/' + req.user.username);
+        if (req.user){
+            res.redirect('/users/'+req.user.id+'/dashboard');
+        }
     }
 );
 
