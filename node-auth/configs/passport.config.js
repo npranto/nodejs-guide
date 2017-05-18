@@ -17,26 +17,34 @@ var passportConfig = {
                         console.log('Incorrect username');
                         return done(null, false, { message: 'Incorrect username.' });
                     }
-                    if (user && !passwordVerified(password, user.password)) {
-                        console.log('USER: ', user, passwordVerified(password, user.password));
-                        return done(null, false, { message: 'Incorrect password.' });
+                    if (user) {
+                        // checking candidate password
+                        bcrypt.compare(password, user.password).then((res) => {
+                            if (res === true){
+                                console.log('USER: ', user);
+                                return done(null, user, { message: 'Welcome!' });
+                            }else{
+                                console.log('Incorrect password');
+                                return done(null, false, { message: 'Incorrect password.' });
+                            }
+                        });
                     }
-                    return done(null, user);
                 });
             }
         ))
+
+        passport.serializeUser(function(user, done) {
+            done(null, user.id);
+        });
+
+        passport.deserializeUser(function(id, done) {
+            User.findById(id, function(err, user) {
+                done(err, user);
+            });
+        });
     }
 }
 
-// helper functions
-var passwordVerified = function(candidatePassword, hashedPassword){
-    return bcrypt.compare(candidatePassword, hashedPassword).then((res) => {
-        if (res){
-            return true;
-        }
-        return false;
-    });
-}
 
 
 module.exports = passportConfig;
