@@ -3,6 +3,7 @@ var router = express.Router();
 var multer = require('multer');
 var upload = multer({ dest: 'uploads/' });
 var bcrypt = require('bcryptjs');
+var passport = require('passport');
 
 var User = require('./../models/User.js');
 
@@ -14,6 +15,23 @@ router.get('/', function(req, res, next) {
 router.get('/login', function(req, res, next) {
     res.render('login', {title: 'Login'});
 });
+
+router.post('/login',
+    passport.authenticate('local', {
+        successRedirect: '/users/:id/dashboard',
+        failureRedirect: '/users/login',
+        failureFlash: true,
+        successFlash: true,
+        session: false
+    }), function(req, res) {
+        console.log('REQ.USER: ', req.user);
+        // strategy's verify callback (to flash messages)
+        // req.flash('info', 'Flash is back!');
+        // If this function gets called, authentication was successful.
+        // `req.user` contains the authenticated user.
+        // res.redirect('/users/' + req.user.username);
+    }
+);
 
 router.get('/register', function(req, res, next) {
     res.render('register', {title: 'Register'});
@@ -83,5 +101,6 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
 router.get('/:id/dashboard', function(req, res, next) {
     res.render('dashboard', {title: 'Dashboard'});
 });
+
 
 module.exports = router;

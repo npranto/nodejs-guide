@@ -13,6 +13,7 @@ var expressValidator = require('express-validator');
 var mongodb = require('mongodb');
 var mongoose = require('mongoose');
 
+var passportConfig = require('./configs/passport.config.js');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
@@ -44,6 +45,8 @@ app.use(session({
 // passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+passportConfig.passportLocalStrategy(passport);
+
 
 // express validator middleware
 app.use(expressValidator({
