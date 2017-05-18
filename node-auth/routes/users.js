@@ -82,7 +82,7 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
                     }
                     console.log('NEW USER SAVED TO DATABASE: ', userCreated);
                     // res.location('/');
-                    res.redirect('/users/1/dashboard');
+                    res.redirect('/users/login');
                     // return res.status(201).json(userCreated);
                 })
             });
@@ -96,6 +96,16 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
 router.get('/:id/dashboard', function(req, res, next) {
     res.render('dashboard', {title: 'Dashboard'});
 });
+
+router.get('/:id/profile', function(req, res, next) {
+    res.render('profile', {title: 'Profile'});
+});
+
+router.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+});
+
 
 
 module.exports = router;
