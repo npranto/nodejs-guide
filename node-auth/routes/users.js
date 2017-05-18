@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 var upload = multer({ dest: 'uploads/' });
+var bcrypt = require('bcryptjs');
 
 var User = require('./../models/User.js');
 
@@ -56,21 +57,31 @@ router.post('/register', upload.single('avatar'), function(req, res, next) {
             email: req.body.email,
             password: req.body.password,
             avatar: getAvatarFilename()
-        })
-        // save newUser to the database
-        newUser.save(function(err, userCreated){
-            if (err) {
-                console.log('ERROR IN SAVING NEW USER TO DATABASE: ', err);
-                return res.status(500).json(err);
-            }
-            console.log('NEW USER SAVED TO DATABASE: ', userCreated);
-            // res.location('/');
-            res.redirect('/');
-            // return res.status(201).json(userCreated);
-        })
+        });
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(newUser.password, salt, function(err, hash) {
+                // save newUser to the database
+                newUser.password = hash;
+                newUser.save(function(err, userCreated){
+                    if (err) {
+                        console.log('ERROR IN SAVING NEW USER TO DATABASE: ', err);
+                        return res.status(500).json(err);
+                    }
+                    console.log('NEW USER SAVED TO DATABASE: ', userCreated);
+                    // res.location('/');
+                    res.redirect('/users/1/dashboard');
+                    // return res.status(201).json(userCreated);
+                })
+            });
+        });
+
     }
 
     console.log('SUCCESS! NEW USER CREATED...', newUser);
+});
+
+router.get('/:id/dashboard', function(req, res, next) {
+    res.render('dashboard', {title: 'Dashboard'});
 });
 
 module.exports = router;
