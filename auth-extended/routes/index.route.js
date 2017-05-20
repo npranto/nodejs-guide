@@ -14,7 +14,8 @@ module.exports = function (app, passport) {
         })
     });
 
-    // use userRoutes for '/user' route
-    app.use('/users', userRoutes)
+    // load userRoutes
+    userRoutes(app, passport);
+    // app.use('/users', userRoutes)
 
 }

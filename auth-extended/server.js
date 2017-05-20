@@ -15,14 +15,14 @@ var session = require('express-session');
 // import local files needed
 var rootRoutes = require('./routes/index.route');
 var databaseConfig = require('./config/database.config');
-var passportConfig = require('./config/passport.config');
+// var passportConfig = require('./config/passport.config');
 var sessionConfig = require('./config/session.config');
 
 
 
 // initialize local packages, variables, and configurations
 var app = express();
-// passportConfig(passport); // pass passport for configuration
+require('./config/passport.config')(passport); // pass passport for configuration
 
 
 
