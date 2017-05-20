@@ -48,10 +48,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());    // read cookies (needed for auth)
 app.use(express.static(path.join(__dirname, 'public')));
 // required for passport
-// app.use(session(sessionConfig)); // session secret
-// app.use(passport.initialize());
-// app.use(passport.session()); // persistent login sessions
-// app.use(flash()); // use connect-flash for flash messages stored in session
+app.use(session(sessionConfig)); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 
