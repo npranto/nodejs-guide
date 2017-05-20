@@ -1,3 +1,3 @@
-/**
- * Created by Shakib on 5/18/17.
- */
+module.exports = function (passport) {
+
+}

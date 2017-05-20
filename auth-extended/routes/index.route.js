@@ -1,9 +1,20 @@
 var express = require('express');
-var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+var userRoutes = require('./users.route');
 
-module.exports = router;
+module.exports = function (app, passport) {
+
+    // =====================================
+    // HOME PAGE (with login and signup tabs) ========
+    // =====================================
+    app.get('/', function(req, res) {
+        // load the index.pug file
+        res.render('index', {
+            title: 'Home'
+        })
+    });
+
+    // use userRoutes for '/user' route
+    app.use('/users', userRoutes)
+
+}

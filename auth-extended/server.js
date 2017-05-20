@@ -16,17 +16,18 @@ var session = require('express-session');
 var rootRoutes = require('./routes/index.route');
 var databaseConfig = require('./config/database.config');
 var passportConfig = require('./config/passport.config');
+var sessionConfig = require('./config/session.config');
 
 
 
 // initialize local packages, variables, and configurations
 var app = express();
-passportConfig(passport); // pass passport for configuration
+// passportConfig(passport); // pass passport for configuration
 
 
 
 // database configuration
-mongoose.connect('mongodb://localhost:27017/auth-extended');    // connect to the local database
+mongoose.connect(databaseConfig.uri);    // connect to the local database
 mongoose.connection.once('open', function(){
     console.log('Successfully connected to mongodb...');
 });
@@ -47,10 +48,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());    // read cookies (needed for auth)
 app.use(express.static(path.join(__dirname, 'public')));
 // required for passport
-app.use(session({ secret: 'ilov54546escot-4565chsco-tch546-45yscot456chs-cotch' })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
+// app.use(session(sessionConfig)); // session secret
+// app.use(passport.initialize());
+// app.use(passport.session()); // persistent login sessions
+// app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 
