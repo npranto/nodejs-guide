@@ -3,24 +3,9 @@ var bcrypt = require('bcryptjs');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-    name: {
-        type: String,
-        required: String,
-    },
-    username: {
-        type: String,
-        required: String,
-    },
     local: {
-        email: {
-            type: String,
-            required: String,
-            unique: true
-        },
-        password: {
-            type: String,
-            required: String,
-        }
+        email        : String,
+        password     : String
     },
     gmail: {
         id           : String,
@@ -42,8 +27,14 @@ var UserSchema = new Schema({
     }
 })
 
-UserSchema.methods.hashPassword = function () {
-
+UserSchema.methods.hashPassword = function (password) {
+    return new Promise((resolve, reject) => {
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(password, salt, function(err, hash) {
+                resolve(hash);
+            });
+        });
+    });
 }
 
 module.exports = mongoose.model('User', UserSchema);
