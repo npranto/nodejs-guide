@@ -1,6 +1,7 @@
 {
   "name": "local-auth",
   "version": "0.0.0",
+  "description": "A complete walkthough of implementing local authentication with email and password on the backend",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
