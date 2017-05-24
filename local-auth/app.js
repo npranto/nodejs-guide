@@ -15,13 +15,11 @@ var indexRoutes = require('./routes/index.js');
 
 var app = express();
 
-
-
 // configuring the database
 mongoose.connect(databaseConfig.uri);
-// mongoose.connection.once('error', function(){
-//   console.error.bind(console, 'connection error :( :')
-// });
+mongoose.connection.once('error', function(){
+  console.error.bind(console, 'connection error :( :')
+});
 mongoose.connection.once('open', function() {
     console.log('Connected to MongoDB :)');
 });
